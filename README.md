@@ -1,2 +1,2 @@
 # StudyBudy
-A website for managing you student life
+A website for managing your student life
