@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% block title %}
+    Welcome {{ user.name }}
+{% endblock title %}
+{% block content %}
+    <div class="container mt-5">
+        <center>
+            <img src="https://avatars.dicebear.com/api/open-peeps/user._id.svg" alt="" height="128">
+            <h1 class="text-center">Welcome {{user.name}}</h1>
+        </center>
+    </div>
+{% endblock content %}
