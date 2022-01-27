@@ -18,8 +18,19 @@ database = Database()
 @app.route('/')
 def index():
     if 'user' in session:
-        return render_template('user.html', user=session['user'])
+        user =database.getUser(session['user']['_id'])
+        return render_template('user.html', user=user)
     return render_template('index.html')
+
+@app.route('/logout')
+def logout():
+    session.pop('user', None)
+    return redirect(url_for('index'))
+
+@app.route('/boards')
+def boards():
+    boards = database.getBoards(session['user']['_id'])
+    return render_template('boards/boards.html', boards=boards)
 
 def handle_authorize(remote, token, user_info):
     if database.userExists(user_info['email']):

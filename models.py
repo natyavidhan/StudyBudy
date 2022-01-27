@@ -15,7 +15,8 @@ class Database:
         user = {
             "_id": str(uuid4()),
             "email": email,
-            "name": email.split("@")[0]
+            "name": email.split("@")[0],
+            "boards": [],
         }
         self.users.insert_one(user)
     
@@ -27,3 +28,6 @@ class Database:
     
     def userExists(self, email):
         return self.users.find_one({"email": email}) is not None
+    
+    def getBoards(self, id):
+        return self.users.find_one({"_id": id})["boards"]

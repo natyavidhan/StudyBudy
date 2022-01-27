@@ -5,8 +5,12 @@
 {% block content %}
     <div class="container mt-5">
         <center>
-            <img src="https://avatars.dicebear.com/api/open-peeps/user._id.svg" alt="" height="128">
+            <img src="https://avatars.dicebear.com/api/open-peeps/{{user._id}}.svg" alt="" height="128">
             <h1 class="text-center">Welcome {{user.name}}</h1>
+            <div class="mt-5 buttons">
+                <a href="/boards"><button class="btn btn-success">Boards</button></a>
+                <a href="/logout"><button class="btn btn-danger">Logout</button></a>
+            </div>
         </center>
     </div>
 {% endblock content %}
