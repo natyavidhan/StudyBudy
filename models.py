@@ -43,7 +43,7 @@ class Database:
             "name": name,
             "color": "#" + "".join([random.choice("0123456789ABCDEF") for i in range(6)]),
             "tasks": {},
-            "coulumns": {},
+            "columns": {},
             "columnOrder": [],
             "created": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
         }

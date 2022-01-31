@@ -1,1 +1,21 @@
-{{board}}
+{% extends 'base.html' %}
+{% block title %}
+    {{board.name}}
+{% endblock title %}
+{% block content %}
+<style>
+    body{
+        background-color: {{board.color}};
+    }
+</style>
+    <div class="container mt-5">
+        <div class="text-center">
+            <h1>{{board.name}}</h1>
+        </div>
+        <div class="columns">
+            {% for column in board.columnOrder %}
+                {{board.columns[column]}}
+            {% endfor %}
+        </div>
+    </div>
+{% endblock content %}
