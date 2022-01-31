@@ -29,8 +29,26 @@ def logout():
 
 @app.route('/boards')
 def boards():
-    boards = database.getBoards(session['user']['_id'])
-    return render_template('boards/boards.html', boards=boards)
+    if 'user' in session:
+        boards = database.getBoards(session['user']['_id'])
+        return render_template('boards/boards.html', boards=boards)
+    return redirect(url_for('index'))
+
+@app.route('/boards/new', methods=['POST'])
+def new_board():
+    if 'user' in session:
+        database.addBoard(request.form['name'], session['user']['_id'])
+        return redirect(url_for('boards'))
+    return redirect(url_for('index'))
+
+@app.route('/boards/<id>')
+def board(id):
+    if 'user' in session:
+        board = database.getBoard(id)
+        if board is not None:
+            return render_template('boards/board.html', board=board)
+        return redirect(url_for('boards'))
+    return redirect(url_for('index'))
 
 def handle_authorize(remote, token, user_info):
     if database.userExists(user_info['email']):
