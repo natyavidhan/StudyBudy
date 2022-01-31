@@ -32,7 +32,21 @@
               </div>
         </div>
         <div class="boards">
-
+			{% for board in boards %}
+			<div class="board" onclick="redirect(`{{board._id}}`)">
+				<div class="card text-white bg-dark mb-3" style="max-width: 18rem;">
+					<div class="card-body">
+					  <h5 class="card-title">{{board.name}}</h5>
+					  <p class="card-text">Columns: {{board.columnOrder|length}} <br>Created On: {{board.created}}</p>
+					</div>
+				  </div>
+			</div>
+			{% endfor %}
         </div>
     </div>
+	<script>
+		function redirect(boardId) {
+			window.location.href = "/boards/" + boardId;
+		}
+	</script>
 {% endblock content %}

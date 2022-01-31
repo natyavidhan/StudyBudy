@@ -32,7 +32,10 @@ class Database:
         return self.users.find_one({"email": email}) is not None
     
     def getBoards(self, id):
-        return self.users.find_one({"_id": id})["boards"]
+        boards = []
+        for board in self.users.find_one({"_id": id})["boards"]:
+            boards.append(self.boards.find_one({"_id": board}))
+        return boards
 
     def addBoard(self, name, id):
         data = {

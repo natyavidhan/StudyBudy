@@ -44,7 +44,7 @@ def new_board():
 @app.route('/boards/<id>')
 def board(id):
     if 'user' in session:
-        board = database.getBoard(id)
+        board = database.getBoard(id, session['user']['_id'])
         if board is not None:
             return render_template('boards/board.html', board=board)
         return redirect(url_for('boards'))
