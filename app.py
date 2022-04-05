@@ -10,7 +10,7 @@ oauth = OAuth(app)
 config = dotenv_values(".env")
 config = dict(config)
 app.secret_key = config["secret_key"]
-for keys in config.keys():
+for keys in config:
     app.config[keys] = config[keys]
 backends = [Google]
 database = Database()
@@ -51,11 +51,9 @@ def board(id):
     return redirect(url_for('index'))
 
 def handle_authorize(remote, token, user_info):
-    if database.userExists(user_info['email']):
-        session['user'] = database.getUserByEmail(user_info['email'])
-    else:
+    if not database.userExists(user_info['email']):
         database.addUser(user_info['email'])
-        session['user'] = database.getUserByEmail(user_info['email'])
+    session['user'] = database.getUserByEmail(user_info['email'])
     return redirect(url_for('index'))
 
 bp = create_flask_blueprint(backends, oauth, handle_authorize)

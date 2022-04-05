@@ -32,21 +32,23 @@ class Database:
         return self.users.find_one({"email": email}) is not None
     
     def getBoards(self, id):
-        boards = []
-        for board in self.users.find_one({"_id": id})["boards"]:
-            boards.append(self.boards.find_one({"_id": board}))
-        return boards
+        return [
+            self.boards.find_one({"_id": board})
+            for board in self.users.find_one({"_id": id})["boards"]
+        ]
 
     def addBoard(self, name, id):
         data = {
             "_id": str(uuid4()),
             "name": name,
-            "color": "#" + "".join([random.choice("0123456789ABCDEF") for i in range(6)]),
+            "color": "#"
+            + "".join([random.choice("0123456789ABCDEF") for _ in range(6)]),
             "tasks": {},
             "columns": {},
             "columnOrder": [],
             "created": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
         }
+
         self.boards.insert_one(data)
         self.users.update_one({"_id": id}, {"$push": {"boards": data["_id"]}}, upsert=True)
     
